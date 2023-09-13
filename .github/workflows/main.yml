@@ -20,3 +20,6 @@ jobs:
     - name: Run Docker Container
       run: |
         docker run -d -p 8080:8080 --name smitbackend smitbackend
+    - name: Test
+      run: |
+        wget http://localhost:8080 && cat index.html
