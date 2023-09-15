@@ -45,5 +45,5 @@ jobs:
         
     - name: Run Docker Container
       run: |
-        docker run -e MONGO_URL=$MONGO_URL -p 8080:8080 --name smitbackend smitbackend:latest
+        docker run -d -e MONGO_URL=$MONGO_URL -p 8080:8080 --name smitbackend smitbackend:latest
     
