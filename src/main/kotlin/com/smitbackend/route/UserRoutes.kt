@@ -10,7 +10,8 @@ import org.w3c.dom.html.HTMLAnchorElement
 
 fun Route.listUsers() {
     get {
-      call.respond("Hey How are you")
+      val result =   userCollection.insertOne(User("Raj","Kalkani","rajkalkani9099@gmail.com")).wasAcknowledged()
+      call.respond("Hey How are you ${result}")
     }
 }
 
