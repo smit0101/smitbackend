@@ -10,7 +10,7 @@ variable "project_id" {
 
 variable "region" {
   description = "GCP region for the cluster"
-  default     = "northamerica-northeast2"
+  default     = "us-cental1-a"
 }
 
 provider "google" {
