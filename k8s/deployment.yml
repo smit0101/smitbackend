@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smitbackend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smitbackend
+  template:
+    metadata:
+      labels:
+        app: smitbackend
+    spec:
+      containers:
+        - name: smitbackend
+          image: smitmark01/smitbackend:latest
+          ports:
+            - containerPort: 8080
