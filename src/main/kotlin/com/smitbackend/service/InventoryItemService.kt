@@ -19,16 +19,16 @@ suspend fun updateInventoryItemByName(itemName: String, updatedItem: InventoryIt
 
     if (existingItem != null) {
         // Update the properties of the existing item with the values from updatedItem
-        val updatedFields = listOf(
-            InventoryItem::openingQuantity to updatedItem.openingQuantity,
-            InventoryItem::closingQuantity to updatedItem.closingQuantity,
-            InventoryItem::unitOfMeasurement to updatedItem.unitOfMeasurement,
-            InventoryItem::expiryDate to updatedItem.expiryDate,
-            InventoryItem::dateMade to updatedItem.dateMade
+        val updatedFields = setOf(
+            InventoryItem::openingQuantity setTo updatedItem.openingQuantity,
+            InventoryItem::closingQuantity setTo updatedItem.closingQuantity,
+            InventoryItem::unitOfMeasurement setTo updatedItem.unitOfMeasurement,
+            InventoryItem::expiryDate setTo updatedItem.expiryDate,
+            InventoryItem::dateMade setTo updatedItem.dateMade
         )
 
         // Update the item in the collection
-        inventoryItemCollection.updateOne(InventoryItem::name eq itemName, set())
+        inventoryItemCollection.updateOne(InventoryItem::name eq itemName, set(*updatedFields.toTypedArray()))
         return true
     } else {
         return false // Item not found, no update performed
