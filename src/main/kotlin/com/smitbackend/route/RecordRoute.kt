@@ -43,8 +43,3 @@ fun Route.addRecord(){
     }
 }
 
-fun Route.addRecordByDate(){
-    post("/api/add/record/"){
-
-    }
-}
