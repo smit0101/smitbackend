@@ -9,9 +9,19 @@ import org.litote.kmongo.setTo
 
 suspend fun getAllInventoryItems()= inventoryItemCollection.find().toList()
 
-suspend fun addInventoryItem(inventoryItem:InventoryItem)= inventoryItemCollection.insertOne(inventoryItem).wasAcknowledged()
+/*suspend fun addInventoryItem(inventoryItem:InventoryItem)= inventoryItemCollection.insertOne(inventoryItem).wasAcknowledged()*/
 
-suspend fun getInvetoryItemByName(name:String)= inventoryItemCollection.findOne(InventoryItem::name eq name)
+suspend fun addInventoryItem(inventoryItem: InventoryItem): Boolean {
+    val existingItem = inventoryItemCollection.findOne(InventoryItem::name eq inventoryItem.name)
+    if (existingItem != null) {
+        // Item with the same name already exists
+        return false
+    }
+    val result = inventoryItemCollection.insertOne(inventoryItem)
+    return result.wasAcknowledged()
+}
+
+suspend fun getInventoryItemByName(name:String)= inventoryItemCollection.findOne(InventoryItem::name eq name)
 
 suspend fun updateInventoryItemByName(itemName: String, updatedItem: InventoryItem): Boolean {
     // Find the item by name
