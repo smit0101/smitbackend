@@ -2,10 +2,7 @@ package com.smitbackend.plugins
 
 
 
-import com.smitbackend.route.addInventoryItem
-import com.smitbackend.route.getInventoryItemByName
-import com.smitbackend.route.getInventoryItems
-import com.smitbackend.route.updateItemByName
+import com.smitbackend.route.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 
@@ -15,6 +12,9 @@ fun Application.configureRouting() {
         getInventoryItemByName()
         addInventoryItem()
         updateItemByName()
+        getRecords()
+        getRecordByDate()
+        addRecord()
 
     }
 }
