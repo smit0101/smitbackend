@@ -32,7 +32,7 @@ fun Route.getRecordByDate(){
 
 fun Route.addRecord(){
     post("/api/add/record"){
-        val newRecord = call.receive<Record>()
+        val newRecord:com.smitbackend.model.Record = call.receive<com.smitbackend.model.Record>()
         val isAdded = com.smitbackend.service.addRecord(newRecord)
         if (isAdded) {
             call.respond(newRecord)
