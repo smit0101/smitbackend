@@ -1,0 +1,72 @@
+name: Docker Build and Run
+
+on:
+  push:
+    branches:
+      - main # Change this to your main branch name
+
+env:
+  DOCKER_USER: '${{secrets.DOCKER_USERNAME}}'
+  DOCKER_PASSWORD: '${{secrets.DOCKER_PASSWORD}}'
+  MONGO_URL: '${{secrets.MONGO_URL}}'
+  MY_WORKFLOW_VARIABLE: 'This is my workflow variable'
+
+
+
+jobs:
+  echo-variable:
+    runs-on: ubuntu-latest
+    env:
+      JOB_VARIABLE: 'This is my job level variable'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Echo Workflow variable
+        run: echo "$MY_WORKFLOW_VARIABLE"
+
+      - name: Echo Job level Variable
+        run: echo "$JOB_VARIABLE"
+
+      - name: Define Step Level Variable
+        env:
+          STEP_LEVEL_VARIABLE: 'This is my Step level variable'
+        run: echo "$STEP_LEVEL_VARIABLE"
+
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+
+
+      - name: Docker Auth
+        id: docker-auth
+        uses: 'docker/login-action@v1'
+        with:
+          username: '${{secrets.DOCKER_USERNAME}}'
+          password: '${{secrets.DOCKER_PASSWORD}}'
+
+      - name: Docker Login
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+      - name: Build Docker Image
+        run: |
+          docker build -t smitbackend:latest .
+
+      - name: Docker Tag
+        run: docker tag smitbackend:latest $DOCKER_USER/smitbackend:latest
+
+      - name: List Images
+        run: docker images
+
+      - name: Docker Push
+        run: docker push smitmark01/smitbackend:latest
+
+      - name: Run Docker Container
+        run: |
+          docker run -d -e MONGO_URL=$MONGO_URL -p 8080:8080 --name smitbackend smitbackend:latest
+    
