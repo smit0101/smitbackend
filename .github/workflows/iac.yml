@@ -60,11 +60,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@main
+        uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: $GCP_SA_KEY
-          export_default_credentials: true
+          credentials_json: '${{secrets.SERVICE_ACCOUNT_KEY}}'
 
       - name: Configure Docker
         run: gcloud auth configure-docker
