@@ -9,6 +9,7 @@ env:
   DOCKER_USER: '${{secrets.DOCKER_USERNAME}}'
   DOCKER_PASSWORD: '${{secrets.DOCKER_PASSWORD}}'
   MONGO_URL: '${{secrets.MONGO_URL}}'
+  GCP_SA_KEY: '${{secrets.SERVICE_ACCOUNT_KEY}}'
 
 jobs:
   build-and-run:
@@ -64,6 +65,12 @@ jobs:
             service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}  # Path to your service account JSON file
             project_id: ${{ secrets.GCP_PROJECT_ID }}
             export_default_credentials: true
+
+      - name: Authenticate with Google Cloud
+        run: |
+            echo "$GCP_SA_KEY" > gcp-key.json
+            gcloud auth activate-service-account --key-file=gcp-key.json
+
 
       - name: Configure Docker
         run: gcloud auth configure-docker | gcloud config list
