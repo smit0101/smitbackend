@@ -94,6 +94,9 @@ jobs:
       - name: List Images
         run: docker images
 
+      - name: Push Image
+        run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/smitbackend:latest
+
 
       - name: Install Terraform
         run: |
