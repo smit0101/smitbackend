@@ -80,19 +80,20 @@ jobs:
         with:
             credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}'
 
-
-      - name: Set Active Project
-        run: gcloud config set project $GCP_PROJECT_ID
-
       - name: Configure Docker
         run: gcloud auth configure-docker
 
       - name: List Project
-        run: gcloud projects list | gcloud config get-value project
+        run: gcloud projects list
 
       - name: Build Docker Image
         run: |
           docker build -t smitbackend:latest .
+          docker tag smitbackend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/smitbackend:latest
+
+      - name: List Images
+        run: docker images
+
 
       - name: Install Terraform
         run: |
