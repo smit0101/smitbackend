@@ -80,6 +80,12 @@ jobs:
         with:
             credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}'
 
+
+      - name: Authenticate with Service Account Key
+        run: |
+          echo "$GCP_SA_KEY" > service-account-key.json
+          gcloud auth activate-service-account --key-file=service-account-key.json
+
       - name: Configure Docker
         run: gcloud auth configure-docker
 
