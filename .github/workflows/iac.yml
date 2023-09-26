@@ -90,8 +90,28 @@ jobs:
           docker build -t smitbackend:latest .
           docker tag smitbackend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/smitbackend:latest
 
-      - name: List Images
-        run: docker images
+      - name: Debug Environment Variables
+        run: |
+        echo "DOCKER_USER: $DOCKER_USER"
+        echo "DOCKER_PASSWORD: $DOCKER_PASSWORD"
+        echo "MONGO_URL: $MONGO_URL"
+        echo "GCP_PROJECT_ID: $GCP_PROJECT_ID"
+        echo "SERVICE_ACCOUNT_KEY: $SERVICE_ACCOUNT_KEY"
+
+      - name: Debug Service Account Key
+        run: |
+          echo "$SERVICE_ACCOUNT_KEY" > service-account-key.json
+          cat service-account-key.json
+
+      - name: Debug Google Cloud Authentication
+        run: gcloud auth list
+
+      - name: List GCR Images
+        run: |
+          gcloud container images list
+
+
+
 
       - name: Push Image
         run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/smitbackend:latest
