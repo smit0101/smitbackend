@@ -112,7 +112,8 @@ jobs:
       - name: Debug Google Cloud Authentication
         run: gcloud auth list
 
-
+      - name: Debug
+        run: ls /home/runner/work
 
       - name: List GCR Images
         run: |
