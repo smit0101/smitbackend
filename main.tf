@@ -1,8 +1,11 @@
-variable "google_credentials_file" {
-  description = "Path to the Google Cloud service account key file"
-  default     = "secrets/smitbackend-05508106981c.json"
-}
+#variable "google_credentials_file" {
+#  description = "Path to the Google Cloud service account key file"
+#  default     = "secrets/smitbackend-05508106981c.json"
+#}
 
+variable "gcp_sa_key" {
+  description = "Google Cloud service account key file"
+}
 variable "project_id" {
   description = "Google Cloud project ID"
   default     = "smitbackend"
@@ -14,7 +17,7 @@ variable "region" {
 }
 
 provider "google" {
-  credentials = file(var.google_credentials_file)
+  credentials = jsondecode(base64decode(var.gcp_sa_key))
   project     = var.project_id
   region      = var.region
 }
