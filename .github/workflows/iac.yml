@@ -116,10 +116,10 @@ jobs:
         run: ls /home/runner/work
 
       - name: set role1
-        run: 'gcloud projects add-iam-policy-binding smitbackend --member serviceAccount: smitbackend@smitbackend.iam.gserviceaccount.com --role roles/storage.admin'
+        run: 'gcloud projects add-iam-policy-binding smitbackend  --member serviceAccount:smitbackend@smitbackend.iam.gserviceaccount.com  --role roles/storage.admin'
 
       - name: Set role2
-        run: 'gcloud projects add-iam-policy-binding smitbackend --member serviceAccount: smitbackend@smitbackend.iam.gserviceaccount.com --role roles/storage.objectViewer'
+        run: 'gcloud projects add-iam-policy-binding smitbackend --member serviceAccount:smitbackend@smitbackend.iam.gserviceaccount.com --role roles/storage.objectViewer'
 
       - name: List GCR Images
         run: |
