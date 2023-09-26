@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: smitbackend
-          image: smitmark01/smitbackend:latest
+          image: gcr.io/smitbackend/smitbackend:latest
           ports:
             - containerPort: 8080
