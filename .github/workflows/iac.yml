@@ -112,6 +112,9 @@ jobs:
       - name: Debug Google Cloud Authentication
         run: gcloud auth list
 
+      - name: Set Active Account2
+        run: gcloud config set account "smitbackend@smitbackend.iam.gserviceaccount.com"
+
       - name: List GCR Images
         run: |
           gcloud container images list
