@@ -3,7 +3,9 @@ name: Docker Build and Run
 on:
   push:
     branches:
-      - test # Change this to your main branch name
+      - main # Change this to your main branch name
+    paths:
+      - main.tf
 
 env:
   DOCKER_USER: '${{secrets.DOCKER_USERNAME}}'
@@ -79,7 +81,7 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
-            credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}'
+          credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}'
 
 
       - name: Authenticate with Service Account Key
@@ -100,14 +102,14 @@ jobs:
           docker build -t smitbackend:latest .
           docker tag smitbackend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/smitbackend:latest
 
-      
+
 
       - name: Debug Service Account Key
         run: |
           echo "$SERVICE_ACCOUNT_KEY" > service-account-key.json
           cat service-account-key.json
 
-      
+
 
       - name: Debug Google Cloud Authentication
         run: gcloud auth list
@@ -115,11 +117,11 @@ jobs:
       - name: Debug
         run: ls /home/runner/work
 
-#      - name: set role1
-#        run: 'gcloud projects add-iam-policy-binding smitbackend  --member serviceAccount:smitbackend@smitbackend.iam.gserviceaccount.com  --role roles/storage.admin'
-#
-#      - name: Set role2
-#        run: 'gcloud projects add-iam-policy-binding smitbackend --member serviceAccount:smitbackend@smitbackend.iam.gserviceaccount.com --role roles/storage.objectViewer'
+      #      - name: set role1
+      #        run: 'gcloud projects add-iam-policy-binding smitbackend  --member serviceAccount:smitbackend@smitbackend.iam.gserviceaccount.com  --role roles/storage.admin'
+      #
+      #      - name: Set role2
+      #        run: 'gcloud projects add-iam-policy-binding smitbackend --member serviceAccount:smitbackend@smitbackend.iam.gserviceaccount.com --role roles/storage.objectViewer'
 
       - name: List GCR Images
         run: |
@@ -136,12 +138,13 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-         terraform_version: 1.0.3
+          terraform_version: 1.0.3
         env:
-         GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
 
       - name: Install Terraform
         run: |
+          if [ -n "$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }} | grep 'main.tf')" ]; then
           curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
           echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list > /dev/null
           sudo apt-get update && sudo apt-get install terraform | terraform --version 
