@@ -18,7 +18,7 @@ variable "region" {
 }
 
 provider "google" {
-  credentials = file(env.GCP_SA_KEY)
+  #credentials = file(env.GCP_SA_KEY)
   project     = var.project_id
   region      = var.region
 }
