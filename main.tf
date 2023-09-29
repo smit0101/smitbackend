@@ -18,7 +18,7 @@ variable "region" {
 }
 
 provider "google" {
-  credentials = jsondecode(base64decode(var.gcp_sa_key))
+  credentials = var.gcp_sa_key
   project     = var.project_id
   region      = var.region
 }
