@@ -27,15 +27,15 @@ resource "google_container_cluster" "my_cluster" {
   name               = "my-gke-cluster"
   location           = var.region
   initial_node_count = 1
-
-
-
-  node_pool {
-    name               = "default-pool"
-    machine_type       = "e2-medium"
-    initial_node_count = 1
-  }
 }
+
+
+#  node_pool {
+#    name               = "default-pool"
+#    machine_type       = "e2-medium"
+#    initial_node_count = 1
+#  }
+#}
 
 resource "google_container_node_pool" "default" {
   name       = "default-pool"
@@ -45,6 +45,7 @@ resource "google_container_node_pool" "default" {
 
   node_config {
     machine_type = "e2-medium"
+    image_type = "COS_CONTAINERD"
   }
 }
 
@@ -56,5 +57,6 @@ resource "google_container_node_pool" "nodes" {
 
   node_config {
     machine_type = "e2-medium"
+    image_type = "COS_CONTAINERD"
   }
 }
