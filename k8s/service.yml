@@ -2,6 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: smitbackend-service
+  namespace: smitbackendapi
+  labels:
+    app: smitbackend
 spec:
   selector:
     app: smitbackend

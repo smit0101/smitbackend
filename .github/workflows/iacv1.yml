@@ -150,4 +150,16 @@ jobs:
           else
           echo "No change to main.tf"
           fi
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Apply Terraform Changes
+        run: terraform apply -auto-approve
+
+      - name: Deploy to GKE
+        run: |
+            gcloud container clusters get-credentials my-gke-cluster --location us-central1-a
+            kubectl apply -f k8s/main.yml
+            kubectl apply -f k8s/service.yml
           

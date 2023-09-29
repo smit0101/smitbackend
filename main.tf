@@ -37,8 +37,8 @@ resource "google_container_cluster" "my_cluster" {
   }
 
   node_pool {
-    name       = "default-pool"
-    machine_type = "e2-medium"
+    name               = "default-pool"
+    machine_type       = "e2-medium"
     initial_node_count = 1
   }
 }
