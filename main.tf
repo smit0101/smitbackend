@@ -2,6 +2,7 @@
 #  description = "Path to the Google Cloud service account key file"
 #  default     = "secrets/smitbackend-05508106981c.json"
 #}
+#1
 
 variable "gcp_sa_key" {
   description = "Google Cloud service account key file"
