@@ -18,7 +18,7 @@ variable "region" {
 }
 
 provider "google" {
-  credentials = var.gcp_sa_key
+  credentials = file(env.GCP_SA_KEY)
   project     = var.project_id
   region      = var.region
 }
@@ -45,7 +45,7 @@ resource "google_container_node_pool" "default" {
 
   node_config {
     machine_type = "e2-medium"
-    image_type = "COS_CONTAINERD"
+    image_type   = "COS_CONTAINERD"
   }
 }
 
@@ -57,6 +57,6 @@ resource "google_container_node_pool" "nodes" {
 
   node_config {
     machine_type = "e2-medium"
-    image_type = "COS_CONTAINERD"
+    image_type   = "COS_CONTAINERD"
   }
 }
