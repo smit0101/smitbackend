@@ -43,7 +43,7 @@ spec:
               key: "MONGO_URL"
               name: "smitbackend-config-jdkz"
 ---
-apiVersion: "autoscaling/v2beta1"
+apiVersion: "autoscaling/v2beta2"
 kind: "HorizontalPodAutoscaler"
 metadata:
   name: "smitbackend-hpa-wogk"
