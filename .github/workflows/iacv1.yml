@@ -177,7 +177,7 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-            gcloud container clusters get-credentials my-gke-cluster --location us-central1-a
+            gcloud container clusters get-credentials my-gke-cluster --region us-central1-a
             kubectl apply -f k8s/main.yml
             kubectl apply -f k8s/service.yml
           
