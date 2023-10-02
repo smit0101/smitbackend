@@ -139,6 +139,7 @@ jobs:
 
       - name: Push Image
         run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/smitbackend:latest
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -184,6 +185,8 @@ jobs:
       - name: Deploy to GKE
         run: |
             gcloud container clusters get-credentials my-gke-cluster --region us-central1-a
+            kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+          
             kubectl apply -f k8s/main.yml
             kubectl apply -f k8s/service.yml
           
