@@ -42,24 +42,24 @@ spec:
             configMapKeyRef:
               key: "MONGO_URL"
               name: "smitbackend-config-jdkz"
----
-apiVersion: "autoscaling/v2beta2"
-kind: "HorizontalPodAutoscaler"
-metadata:
-  name: "smitbackend-hpa"
-  namespace: "smitbackendapi"
-  labels:
-    app: "smitbackend"
-spec:
-  scaleTargetRef:
-    kind: "Deployment"
-    name: "smitbackend"
-    apiVersion: "apps/v1"
-  minReplicas: 1
-  maxReplicas: 5
-  metrics:
-  - type: "Resource"
-    resource:
-      name: "cpu"
-      targetAverageUtilization: 80
+#---
+#apiVersion: "autoscaling/v2beta2"
+#kind: "HorizontalPodAutoscaler"
+#metadata:
+#  name: "smitbackend-hpa"
+#  namespace: "smitbackendapi"
+#  labels:
+#    app: "smitbackend"
+#spec:
+#  scaleTargetRef:
+#    kind: "Deployment"
+#    name: "smitbackend"
+#    apiVersion: "apps/v1"
+#  minReplicas: 1
+#  maxReplicas: 5
+#  metrics:
+#  - type: "Resource"
+#    resource:
+#      name: "cpu"
+#      targetAverageUtilization: 80
 
